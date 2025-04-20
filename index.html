@@ -8,7 +8,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom Font (Optional) -->
+  <!-- Custom Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = {
@@ -22,58 +22,34 @@
     }
   </script>
 
-  <!-- AOS (Animate On Scroll) -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-</head>
-<body class="bg-black text-white font-sans">
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
-  <!-- NAVBAR -->
-  <header class="bg-gray-900 py-4">
-    <nav class="container mx-auto flex justify-center">
-      <div class="flex gap-10">
-        <a class="nav-link text-white" href="#">Hjem</a>
-        <a class="nav-link text-white" href="#">Hold</a>
-        <a class="nav-link text-white" href="#">Turneringer</a>
-        <a class="nav-link text-white" href="#">Kontact</a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- HERO SECTION -->
-  <section class="text-center py-32 px-4 bg-black">
-    <h1 class="text-5xl font-bold mb-4" data-aos="fade-down" data-aos-duration="1000">
-      Velkommen til SMK
-    </h1>
-    <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
-      En af Danmarks mest elite esportsklubber
-    </p>
-    <button class="btn btn-primary bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full" data-aos="zoom-in" data-aos-delay="600">
-      Bliv Medlem
-    </button>
-  </section>
-
-  <!-- ABOUT SECTION -->
-  <section class="bg-black text-white py-20 px-8">
-    <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-      <h2 class="text-4xl font-bold mb-4">Om klubben</h2>
-      <p class="text-lg text-gray-400 leading-relaxed">
-        <!-- Replace this with your own story -->
-        SMK blev grundlagt i 2024 af en lille gruppe venner, der alle havde én ting til fælles: en kæmpe passion og et ønske om at skabe noget, der faktisk betyder noget. Vi savnede et sted, hvor man både kunne tage sit talent seriøst og stadig være en del af et ægte fællesskab. Så vi byggede det selv.
-
-        SMK er drevet af ambition. Vi tror på at løfte folk op, ikke kun fordi de er dygtige, men fordi de vil noget og er klar til at arbejde for det. Vi går op i at skabe rammer, hvor man kan udvikle sig, presse sig selv, og stadig have det sjovt sammen med folk, der forstår én.
-
-        For os handler det ikke kun om at nå langt, det handler om at gøre det på den rigtige måde. Med respekt for hinanden, med plads til at fejle, og med en kultur hvor man bliver set og hørt. Det er det, der binder SMK sammen. Det er det, vi bygger videre på.
-      </p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer footer-center p-4 bg-gray-800 text-gray-400">
-    <p>© 2025 SMK Esports. All rights reserved.</p>
-  </footer>
-
-  <!-- Custom Styles -->
+  <!-- Cursor Glow Style -->
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      position: relative;
+      background-color: black;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99, 102, 241, 0.2), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .nav-link {
       position: relative;
       font-weight: 500;
@@ -96,13 +72,71 @@
     .nav-link:hover::after {
       width: 100%;
     }
-  </style>
 
-  <!-- Scripts -->
+    /* Ensure content is above the background glow */
+    header, section, footer {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="text-white font-sans">
+
+  <!-- NAVBAR -->
+  <header class="bg-gray-900 py-4">
+    <nav class="container mx-auto flex justify-center">
+      <div class="flex gap-10">
+        <a class="nav-link text-white" href="#">Hjem</a>
+        <a class="nav-link text-white" href="#">Hold</a>
+        <a class="nav-link text-white" href="#">Turneringer</a>
+        <a class="nav-link text-white" href="#">Kontact</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="text-center py-32 px-4">
+    <h1 class="text-5xl font-bold mb-4" data-aos="fade-down" data-aos-duration="1000">
+      Velkommen til SMK
+    </h1>
+    <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+      En af Danmarks mest elite esportsklubber
+    </p>
+    <button class="btn bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full" data-aos="zoom-in" data-aos-delay="600">
+      Bliv Medlem
+    </button>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="py-20 px-8">
+    <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+      <h2 class="text-4xl font-bold mb-4">Om klubben</h2>
+      <p class="text-lg text-gray-400 leading-relaxed">
+        SMK blev grundlagt i 2024 af en lille gruppe venner, der alle havde én ting til fælles: en kæmpe passion og et ønske om at skabe noget, der faktisk betyder noget. Vi savnede et sted, hvor man både kunne tage sit talent seriøst og stadig være en del af et ægte fællesskab. Så vi byggede det selv.
+        <br><br>
+        SMK er drevet af ambition. Vi tror på at løfte folk op, ikke kun fordi de er dygtige, men fordi de vil noget og er klar til at arbejde for det. Vi går op i at skabe rammer, hvor man kan udvikle sig, presse sig selv, og stadig have det sjovt sammen med folk, der forstår én.
+        <br><br>
+        For os handler det ikke kun om at nå langt, det handler om at gøre det på den rigtige måde. Med respekt for hinanden, med plads til at fejle, og med en kultur hvor man bliver set og hørt. Det er det, der binder SMK sammen. Det er det, vi bygger videre på.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer footer-center p-4 bg-gray-800 text-gray-400">
+    <p>© 2025 SMK Esports. All rights reserved.</p>
+  </footer>
+
+  <!-- AOS + Cursor Script -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
-  </script>
 
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX + 'px';
+      const y = e.clientY + 'px';
+      document.body.style.setProperty('--x', x);
+      document.body.style.setProperty('--y', y);
+    });
+  </script>
 </body>
 </html>
