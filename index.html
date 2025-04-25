@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom Font -->
+  <!-- Orbitron Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = {
@@ -22,10 +22,10 @@
     }
   </script>
 
-  <!-- AOS -->
+  <!-- AOS (Animate On Scroll) -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
-  <!-- Cursor Glow Style -->
+  <!-- Custom Styles -->
   <style>
     html, body {
       height: 100%;
@@ -38,7 +38,7 @@
       overflow-x: hidden;
     }
 
-    body::before {
+    .glow-zone::before {
       content: '';
       position: fixed;
       top: 0;
@@ -48,6 +48,12 @@
       background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99, 102, 241, 0.2), transparent 60%);
       pointer-events: none;
       z-index: 0;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    .no-glow::before {
+      opacity: 0;
     }
 
     .nav-link {
@@ -55,6 +61,7 @@
       font-weight: 500;
       padding: 0.5rem 1rem;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
 
     .nav-link::after {
@@ -73,70 +80,202 @@
       width: 100%;
     }
 
-    /* Ensure content is above the background glow */
-    header, section, footer {
+    header, footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    .glow-zone {
       position: relative;
       z-index: 1;
+    }
+
+    .hidden-section {
+      display: none;
+    }
+
+    .visible-section {
+      display: block;
+    }
+
+    canvas {
+    pointer-events: none;
     }
   </style>
 </head>
 <body class="text-white font-sans">
+  <canvas id="starfield" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
 
   <!-- NAVBAR -->
   <header class="bg-gray-900 py-4">
     <nav class="container mx-auto flex justify-center">
       <div class="flex gap-10">
-        <a class="nav-link text-white" href="#">Hjem</a>
-        <a class="nav-link text-white" href="#">Hold</a>
-        <a class="nav-link text-white" href="#">Turneringer</a>
-        <a class="nav-link text-white" href="#">Kontact</a>
+        <a class="nav-link" onclick="showSection('home')">Hjem</a>
+        <a class="nav-link" href="#">Hold</a>
+        <a class="nav-link" href="#">Turneringer</a>
+        <a class="nav-link" onclick="showSection('contact')">Kontakt</a>
       </div>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section class="text-center py-32 px-4">
-    <h1 class="text-5xl font-bold mb-4" data-aos="fade-down" data-aos-duration="1000">
-      Velkommen til SMK
-    </h1>
-    <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
-      En af Danmarks mest elite esportsklubber
-    </p>
-    <button class="btn bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full" data-aos="zoom-in" data-aos-delay="600">
-      Bliv Medlem
-    </button>
-  </section>
+  <!-- GLOW ZONE -->
+  <div class="glow-zone no-glow">
 
-  <!-- ABOUT -->
-  <section class="py-20 px-8">
-    <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-      <h2 class="text-4xl font-bold mb-4">Om klubben</h2>
-      <p class="text-lg text-gray-400 leading-relaxed">
-        SMK blev grundlagt i 2024 af en lille gruppe venner, der alle havde én ting til fælles: en kæmpe passion og et ønske om at skabe noget, der faktisk betyder noget. Vi savnede et sted, hvor man både kunne tage sit talent seriøst og stadig være en del af et ægte fællesskab. Så vi byggede det selv.
-        <br><br>
-        SMK er drevet af ambition. Vi tror på at løfte folk op, ikke kun fordi de er dygtige, men fordi de vil noget og er klar til at arbejde for det. Vi går op i at skabe rammer, hvor man kan udvikle sig, presse sig selv, og stadig have det sjovt sammen med folk, der forstår én.
-        <br><br>
-        For os handler det ikke kun om at nå langt, det handler om at gøre det på den rigtige måde. Med respekt for hinanden, med plads til at fejle, og med en kultur hvor man bliver set og hørt. Det er det, der binder SMK sammen. Det er det, vi bygger videre på.
+    <!-- HERO SECTION -->
+    <section id="home" class="text-center py-32 px-4 transition-opacity duration-700 visible-section">
+      <h1 class="text-5xl font-bold mb-4" data-aos="fade-down" data-aos-duration="1000">
+        Velkommen til SMK
+      </h1>
+      <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+        En af Danmarks mest elite esportsklubber
       </p>
-    </div>
-  </section>
+      <button class="btn bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full" data-aos="zoom-in" data-aos-delay="600">
+        Bliv Medlem
+      </button>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-20 px-8 transition-opacity duration-700 visible-section">
+      <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-4xl font-bold mb-4">Om klubben</h2>
+        <div class="text-lg text-gray-400 leading-relaxed space-y-6">
+          <p>
+            SMK blev grundlagt i 2024 af en lille gruppe venner, der alle havde én ting til fælles: en kæmpe passion og et ønske om at skabe noget, der faktisk betyder noget. Vi savnede et sted, hvor man både kunne tage sit talent seriøst og stadig være en del af et ægte fællesskab. Så vi byggede det selv.
+          </p>
+          <p>
+            SMK er drevet af ambition. Vi tror på at løfte folk op, ikke kun fordi de er dygtige, men fordi de vil noget og er klar til at arbejde for det. Vi går op i at skabe rammer, hvor man kan udvikle sig, presse sig selv, og stadig have det sjovt sammen med folk, der forstår én.
+          </p>
+          <p>
+            For os handler det ikke kun om at nå langt, det handler om at gøre det på den rigtige måde. Med respekt for hinanden, med plads til at fejle, og med en kultur hvor man bliver set og hørt. Det er det, der binder SMK sammen. Det er det, vi bygger videre på.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-32 px-8 text-center transition-opacity duration-700 hidden-section">
+      <div data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-4xl font-bold inline-block border-b-2 border-indigo-500 pb-1 mb-6">
+          Interesseret?
+        </h2>
+        <p class="text-gray-400 text-lg mb-8">
+          Kontakt os via formularen nedenfor, og vi vender tilbage hurtigst muligt!
+        </p>
+        <form class="max-w-xl mx-auto space-y-4">
+          <input type="text" placeholder="Navn" class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          <input type="email" placeholder="Email" class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          <textarea placeholder="Besked" rows="5" class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full transition-all">
+            Send Besked
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer footer-center p-4 bg-gray-800 text-gray-400">
     <p>© 2025 SMK Esports. All rights reserved.</p>
   </footer>
 
-  <!-- AOS + Cursor Script -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
 
-    document.addEventListener('mousemove', (e) => {
+    // Glow effect
+    const glowZone = document.querySelector('.glow-zone');
+    let timeout;
+
+    glowZone.addEventListener('mousemove', (e) => {
       const x = e.clientX + 'px';
       const y = e.clientY + 'px';
-      document.body.style.setProperty('--x', x);
-      document.body.style.setProperty('--y', y);
+      glowZone.style.setProperty('--x', x);
+      glowZone.style.setProperty('--y', y);
+      glowZone.classList.remove('no-glow');
+
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        glowZone.classList.add('no-glow');
+      }, 1500);
     });
+
+    glowZone.addEventListener('mouseleave', () => glowZone.classList.add('no-glow'));
+    glowZone.addEventListener('mouseenter', () => glowZone.classList.remove('no-glow'));
+
+    // Section toggle
+    function showSection(target) {
+      const home = document.getElementById('home');
+      const about = document.getElementById('about');
+      const contact = document.getElementById('contact');
+
+      if (target === 'contact') {
+        home.classList.remove('visible-section');
+        home.classList.add('hidden-section');
+        about.classList.remove('visible-section');
+        about.classList.add('hidden-section');
+        contact.classList.remove('hidden-section');
+        contact.classList.add('visible-section');
+      } else {
+        home.classList.remove('hidden-section');
+        home.classList.add('visible-section');
+        about.classList.remove('hidden-section');
+        about.classList.add('visible-section');
+        contact.classList.remove('visible-section');
+        contact.classList.add('hidden-section');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+
+    const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  for (let i = 0; i < 150; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.5 + 0.2,
+    });
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      star.y += star.speed;
+      if (star.y > canvas.height) {
+        star.y = 0;
+        star.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  drawStars();
+  
+
+
+
+
+
+
   </script>
 </body>
 </html>
