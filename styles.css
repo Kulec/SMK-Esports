@@ -1,0 +1,78 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  position: relative;
+  background-color: black;
+  overflow-x: hidden;
+}
+
+/* Glow Effect */
+.glow-zone::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99, 102, 241, 0.2), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.no-glow::before {
+  opacity: 0;
+}
+
+.glow-zone {
+  position: relative;
+  z-index: 1;
+}
+
+/* Navbar Links */
+.nav-link {
+  position: relative;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Section Toggle */
+.hidden-section {
+  display: none;
+}
+
+.visible-section {
+  display: block;
+}
+
+header, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Canvas */
+canvas {
+  pointer-events: none;
+}
